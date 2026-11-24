@@ -10,3 +10,12 @@ export function validateBookPayload(body, isPatch = false, existingBook = null) 
   if (!body || typeof body !== 'object' || Array.isArray(body)) {
     return { error: 'Request body must be a JSON object.' };
   }
+
+  const currentYear = new Date().getFullYear();
+
+  const titleRaw = isPatch && body.title === undefined ? existingBook.title : body.title;
+  const authorRaw = isPatch && body.author === undefined ? existingBook.author : body.author;
+  const yearRaw = isPatch && body.year === undefined ? existingBook.year : body.year;
+  const genreRaw = isPatch && body.genre === undefined ? existingBook.genre : body.genre;
+  const readRaw = isPatch && body.read === undefined ? existingBook.read : (body.read ?? false);
+  const ratingRaw = isPatch && body.rating === undefined ? existingBook.rating : (body.rating ?? null);
