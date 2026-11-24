@@ -5,3 +5,14 @@ async function request(endpoint, { method = 'GET', body, signal } = {}) {
   if (body !== undefined) {
     headers['Content-Type'] = 'application/json';
   }
+
+  const response = await fetch(`${BASE_URL}${endpoint}`, {
+    method,
+    headers,
+    body: body !== undefined ? JSON.stringify(body) : undefined,
+    signal
+  });
+
+  if (response.status === 204) {
+    return null;
+  }
