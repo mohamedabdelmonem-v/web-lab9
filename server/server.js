@@ -110,3 +110,16 @@ app.get('/api/books/:id', async (req, res) => {
 
   res.status(200).json(book);
 });
+
+// POST /api/books
+app.post('/api/books', async (req, res) => {
+  const { error, data } = validateBookPayload(req.body, false);
+  if (error) return res.status(400).json({ error });
+
+  if (await isDuplicateBook(data.title, data.author)) {
+    return res.status(409).json({ error: 'A book with the same title and author already exists.' });
+  }
+
+  const created = await createBook(data);
+  res.status(201).location(`/api/books/${created.id}`).json(created);
+});
