@@ -35,3 +35,11 @@ export function validateBookPayload(body, isPatch = false, existingBook = null) 
   if (typeof readRaw !== 'boolean') {
     return { error: 'Read status must be a boolean.' };
   }
+  if (ratingRaw !== null) {
+    if (typeof ratingRaw !== 'number' || !Number.isInteger(ratingRaw) || ratingRaw < 1 || ratingRaw > 5) {
+      return { error: 'Rating must be an integer from 1 to 5, or null.' };
+    }
+    if (!readRaw) {
+      return { error: 'A rating is allowed only when read is true.' };
+    }
+  }
