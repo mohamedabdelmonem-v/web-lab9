@@ -39,3 +39,16 @@ app.get('/api/books', async (req, res) => {
   }
 
   const { genre, read, q, sort = 'id', order = 'asc', limit = '50', page = '1' } = req.query;
+
+  if (genre !== undefined && !VALID_GENRES.includes(genre)) {
+    return res.status(400).json({ error: 'Invalid genre filter.' });
+  }
+  if (read !== undefined && read !== 'true' && read !== 'false') {
+    return res.status(400).json({ error: 'Read filter must be true or false.' });
+  }
+  if (!['id', 'title', 'author', 'year', 'rating'].includes(sort)) {
+    return res.status(400).json({ error: 'Invalid sort field.' });
+  }
+  if (!['asc', 'desc'].includes(order)) {
+    return res.status(400).json({ error: 'Order must be asc or desc.' });
+  }
