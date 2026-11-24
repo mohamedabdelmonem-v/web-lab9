@@ -37,3 +37,5 @@ app.get('/api/books', async (req, res) => {
       return res.status(400).json({ error: `Unknown query parameter: ${key}` });
     }
   }
+
+  const { genre, read, q, sort = 'id', order = 'asc', limit = '50', page = '1' } = req.query;
