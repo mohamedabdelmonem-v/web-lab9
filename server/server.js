@@ -93,3 +93,9 @@ app.get('/api/books', async (req, res) => {
     const diff = a[sort] - b[sort];
     return order === 'asc' ? diff : -diff;
   });
+
+  const startIndex = (pageNum - 1) * limitNum;
+  const paginated = sorted.slice(startIndex, startIndex + limitNum);
+
+  res.status(200).json(paginated);
+});
