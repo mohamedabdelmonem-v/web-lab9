@@ -199,3 +199,18 @@ app.get('/api/stats', async (req, res) => {
     byGenre
   });
 });
+
+// 404 Fallback under /api (Express 5 compatible)
+app.use('/api', (req, res) => {
+  res.status(404).json({ error: 'Not found' });
+});
+
+// Central Error-Handling Middleware (4 parameters)
+app.use((err, req, res, next) => {
+  console.error('Unhandled server error:', err);
+  res.status(500).json({ error: 'Something went wrong' });
+});
+
+app.listen(PORT, () => {
+  console.log(`Server listening on http://localhost:${PORT} (Allowed origin: ${CLIENT_ORIGIN})`);
+});
