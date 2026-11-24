@@ -25,7 +25,259 @@ build a  full-stack application: a REST API written with Node.js and Express, an
 
 ## Testing Evidence (Section 7)
 ### curl --include Outputs (10 Requests)
-*(Run `curl.exe --include` against your running server for the 10 required scenarios and paste the full status lines, headers, and bodies here)*
+
+
+ curl.exe --include "http://localhost:3000/api/books?genre=fantasy&sort=year"
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Access-Control-Allow-Origin: http://localhost:5173
+Vary: Origin
+Content-Type: application/json; charset=utf-8
+Content-Length: 235
+ETag: W/"eb-scnLoqb2pGcMcJw6K8397h3XlPI"
+Date: Tue, 24 Nov 2026 21:08:32 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+[{"id":2,"title":"The Hobbit","author":"J.R.R. Tolkien","year":1937,"genre":"fantasy","read":true,"rating":5},{"id":6,"title":"The Name of the Wind","author":"Patrick Rothfuss","year":2007,"genre":"fantasy","read":false,"rating":null}]
+
+
+
+
+
+
+
+ curl.exe --include "http://localhost:3000/api/books/1"
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Access-Control-Allow-Origin: http://localhost:5173
+Vary: Origin
+Content-Type: application/json; charset=utf-8
+Content-Length: 101
+ETag: W/"65-imtguC0biqtv8FVKP54vGf/dVoY"
+Date: Tue, 24 Nov 2026 21:08:40 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"id":1,"title":"Dune","author":"Frank Herbert","year":1965,"genre":"science","read":true,"rating":5}
+PS C:\Users\mooevvv\OneDrive\Desktop\current courses\web progremming\web-labs\web-lab9> curl.exe --include -X POST "http://localhost:3000/api/books" -H "Content-Type: application/json" -d "{\"title\":\"Foundation\",\"author\":\"Isaac Asimov\",\"year\":1951,\"genre\":\"science\",\"read\":true,\"rating\":5}"
+HTTP/1.1 400 Bad Request
+X-Powered-By: Express
+Access-Control-Allow-Origin: http://localhost:5173
+Vary: Origin
+Content-Type: application/json; charset=utf-8
+Content-Length: 43
+ETag: W/"2b-2YCDZucXE/S7RJixCHA65iG3qQs"
+Date: Tue, 24 Nov 2026 21:08:47 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"error":"Malformed JSON in request body."}curl: (3) URL rejected: Port number was not a decimal number between 0 and 65535
+curl: (3) unmatched close brace/bracket in position 61:
+Asimov\,\year\:1951,\genre\:\science\,\read\:true,\rating\:5}
+                                                            ^
+
+
+
+
+
+ curl.exe --include -X POST "http://localhost:3000/api/books" -H "Content-Type: application/json" -d "{\"title\":\"Invalid Book\",\"author\":\"Test Author\",\"year\":2020,\"genre\":\"fiction\",\"read\":false,\"rating\":4}"
+HTTP/1.1 400 Bad Request
+X-Powered-By: Express
+Access-Control-Allow-Origin: http://localhost:5173
+Vary: Origin
+Content-Type: application/json; charset=utf-8
+Content-Length: 43
+ETag: W/"2b-2YCDZucXE/S7RJixCHA65iG3qQs"
+Date: Tue, 24 Nov 2026 21:08:54 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"error":"Malformed JSON in request body."}curl: (3) URL rejected: Port number was not a decimal number between 0 and 65535
+curl: (3) URL rejected: Port number was not a decimal number between 0 and 65535
+curl: (3) unmatched close brace/bracket in position 62:
+Author\,\year\:2020,\genre\:\fiction\,\read\:false,\rating\:4}
+                                                             ^
+
+
+
+
+
+ curl.exe --include "http://localhost:3000/api/books?genre=fiction&genre=history"
+HTTP/1.1 400 Bad Request
+X-Powered-By: Express
+Access-Control-Allow-Origin: http://localhost:5173
+Vary: Origin
+Content-Type: application/json; charset=utf-8
+Content-Length: 43
+ETag: W/"2b-KbQSL0nV4gn4Jssr/vMGu9RuLK4"
+Date: Tue, 24 Nov 2026 21:08:59 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"error":"Repeated query parameter: genre"}
+
+
+
+
+
+
+ curl.exe --include "http://localhost:3000/api/books/999"
+HTTP/1.1 404 Not Found
+X-Powered-By: Express
+Access-Control-Allow-Origin: http://localhost:5173
+Vary: Origin
+Content-Type: application/json; charset=utf-8
+Content-Length: 27
+ETag: W/"1b-z2XdT0RBVuOwsYq0WL+e3NUScIM"
+Date: Tue, 24 Nov 2026 21:09:05 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"error":"Book not found."}
+
+
+
+
+
+
+ curl.exe --include -X POST "http://localhost:3000/api/books" -H "Content-Type: application/json" -d "{\"title\":\"Dune\",\"author\":\"Frank Herbert\",\"year\":1965,\"genre\":\"science\",\"read\":true,\"rating\":5}"
+HTTP/1.1 400 Bad Request
+X-Powered-By: Express
+Access-Control-Allow-Origin: http://localhost:5173
+Vary: Origin
+Content-Type: application/json; charset=utf-8
+Content-Length: 43
+ETag: W/"2b-2YCDZucXE/S7RJixCHA65iG3qQs"
+Date: Tue, 24 Nov 2026 21:09:12 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"error":"Malformed JSON in request body."}curl: (3) URL rejected: Port number was not a decimal number between 0 and 65535
+curl: (3) unmatched close brace/bracket in position 62:
+Herbert\,\year\:1965,\genre\:\science\,\read\:true,\rating\:5}
+                                                             ^
+
+
+
+
+
+ curl.exe --include -X PUT "http://localhost:3000/api/books/4" -H "Content-Type: application/json" -d "{\"title\":\"1984\",\"author\":\"George Orwell\",\"year\":1949,\"genre\":\"fiction\",\"read\":false,\"rating\":null}"
+HTTP/1.1 400 Bad Request
+X-Powered-By: Express
+Access-Control-Allow-Origin: http://localhost:5173
+Vary: Origin
+Content-Type: application/json; charset=utf-8
+Content-Length: 43
+ETag: W/"2b-2YCDZucXE/S7RJixCHA65iG3qQs"
+Date: Tue, 24 Nov 2026 21:09:18 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"error":"Malformed JSON in request body."}curl: (3) URL rejected: Port number was not a decimal number between 0 and 65535
+curl: (3) unmatched close brace/bracket in position 65:
+Orwell\,\year\:1949,\genre\:\fiction\,\read\:false,\rating\:null}
+                                                                ^
+
+
+
+
+
+ curl.exe --include -X PATCH "http://localhost:3000/api/books/4" -H "Content-Type: application/json" -d "{\"read\":true,\"rating\":5}"
+HTTP/1.1 400 Bad Request
+X-Powered-By: Express
+Access-Control-Allow-Origin: http://localhost:5173
+Vary: Origin
+Content-Type: application/json; charset=utf-8
+Content-Length: 43
+ETag: W/"2b-2YCDZucXE/S7RJixCHA65iG3qQs"
+Date: Tue, 24 Nov 2026 21:09:23 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"error":"Malformed JSON in request body."}curl: (3) unmatched close brace/bracket in position 22:
+read\:true,\rating\:5}
+                     ^
+
+
+
+
+
+
+ curl.exe --include -X DELETE "http://localhost:3000/api/books/6"
+HTTP/1.1 204 No Content
+X-Powered-By: Express
+Access-Control-Allow-Origin: http://localhost:5173
+Vary: Origin
+Date: Tue, 24 Nov 2026 21:09:30 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+
+
+
+ curl.exe --include -X DELETE "http://localhost:3000/api/books/6"
+HTTP/1.1 404 Not Found
+X-Powered-By: Express
+Access-Control-Allow-Origin: http://localhost:5173
+Vary: Origin
+Content-Type: application/json; charset=utf-8
+Content-Length: 27
+ETag: W/"1b-z2XdT0RBVuOwsYq0WL+e3NUScIM"
+Date: Tue, 24 Nov 2026 21:09:36 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"error":"Book not found."}
+
+
+
+
+curl.exe --include "http://localhost:3000/api/stats"
+
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Access-Control-Allow-Origin: http://localhost:5173
+Vary: Origin
+Content-Type: application/json; charset=utf-8
+Content-Length: 127
+ETag: W/"7f-xQ6v/oCM6mOak3TTHhLFV8qrjMQ"
+Date: Tue, 24 Nov 2026 21:09:45 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"total":5,"read":4,"unread":1,"averageRating":4.5,"byGenre":{"science":1,"fantasy":1,"history":1,"fiction":1,"non-fiction":1}}
+
+
+
+
+ curl.exe --include -X DELETE "http://localhost:3000/api/books/5"
+HTTP/1.1 204 No Content
+X-Powered-By: Express
+Access-Control-Allow-Origin: http://localhost:5173
+Vary: Origin
+Date: Tue, 24 Nov 2026 21:09:49 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+
+
+
+ curl.exe --include "http://localhost:3000/api/stats"
+
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Access-Control-Allow-Origin: http://localhost:5173
+Vary: Origin
+Content-Type: application/json; charset=utf-8
+Content-Length: 112
+ETag: W/"70-B8JaaMxll7hNz5ipiMkaR6DDelg"
+Date: Tue, 24 Nov 2026 21:10:04 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"total":4,"read":3,"unread":1,"averageRating":4.67,"byGenre":{"science":1,"fantasy":1,"history":1,"fiction":1}}
+
 
 ### Browser Network Tab — OPTIONS Preflight Evidence
 When the React client on `http://localhost:5173` sends a `POST`, `PUT`, `PATCH`, or `DELETE` request with `Content-Type: application/json` to `http://localhost:3000`, the browser first dispatches an HTTP `OPTIONS` preflight request to `/api/books`. In the DevTools Network tab, the server responds with status `204 No Content` and the headers `Access-Control-Allow-Origin: http://localhost:5173`, `Access-Control-Allow-Methods: GET,HEAD,PUT,PATCH,POST,DELETE`, and `Access-Control-Allow-Headers: Content-Type`.
