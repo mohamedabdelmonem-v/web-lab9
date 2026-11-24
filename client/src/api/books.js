@@ -49,3 +49,11 @@ export function createBook(bookData) {
 export function replaceBook(id, bookData) {
   return request(`/api/books/${id}`, { method: 'PUT', body: bookData });
 }
+
+export function patchBook(id, partialData) {
+  return request(`/api/books/${id}`, { method: 'PATCH', body: partialData });
+}
+
+export function deleteBook(id) {
+  return request(`/api/books/${id}`, { method: 'DELETE' });
+}
