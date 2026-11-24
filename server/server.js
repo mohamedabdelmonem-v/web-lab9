@@ -52,3 +52,6 @@ app.get('/api/books', async (req, res) => {
   if (!['asc', 'desc'].includes(order)) {
     return res.status(400).json({ error: 'Order must be asc or desc.' });
   }
+
+  const limitNum = Number(limit);
+  const pageNum = Number(page);
