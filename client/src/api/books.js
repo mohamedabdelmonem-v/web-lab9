@@ -16,3 +16,12 @@ async function request(endpoint, { method = 'GET', body, signal } = {}) {
   if (response.status === 204) {
     return null;
   }
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(data.error || `Request failed with status ${response.status}`);
+  }
+
+  return data;
+}
