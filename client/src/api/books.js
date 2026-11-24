@@ -37,3 +37,7 @@ export function fetchBooks(filters = {}, signal) {
   const path = queryString ? `/api/books?${queryString}` : '/api/books';
   return request(path, { signal });
 }
+
+export function fetchStats(signal) {
+  return request('/api/stats', { signal });
+}
