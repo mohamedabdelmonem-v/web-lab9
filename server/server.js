@@ -123,3 +123,22 @@ app.post('/api/books', async (req, res) => {
   const created = await createBook(data);
   res.status(201).location(`/api/books/${created.id}`).json(created);
 });
+
+// PUT /api/books/:id
+app.put('/api/books/:id', async (req, res) => {
+  const id = validatePositiveIntId(req.params.id);
+  if (!id) return res.status(400).json({ error: 'Book ID must be a positive integer.' });
+
+  const existing = await getBookById(id);
+  if (!existing) return res.status(404).json({ error: 'Book not found.' });
+
+  const { error, data } = validateBookPayload(req.body, false);
+  if (error) return res.status(400).json({ error });
+
+  if (await isDuplicateBook(data.title, data.author, id)) {
+    return res.status(409).json({ error: 'Another book with the same title and author already exists.' });
+  }
+
+  const updated = await replaceBook(id, data);
+  res.status(200).json(updated);
+});
