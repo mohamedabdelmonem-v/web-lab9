@@ -15,3 +15,9 @@ export async function getAllBooks() {
   await delay();
   return books.map((b) => ({ ...b }));
 }
+
+export async function getBookById(id) {
+  await delay();
+  const found = books.find((b) => b.id === id);
+  return found ? { ...found } : null;
+}
