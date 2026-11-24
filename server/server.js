@@ -77,3 +77,19 @@ app.get('/api/books', async (req, res) => {
       (b) => b.title.toLowerCase().includes(term) || b.author.toLowerCase().includes(term)
     );
   }
+
+  // Sort a shallow copy
+  const sorted = [...results].sort((a, b) => {
+    if (sort === 'rating') {
+      if (a.rating === null && b.rating === null) return 0;
+      if (a.rating === null) return 1; // Unrated books always sort last
+      if (b.rating === null) return -1;
+      return order === 'asc' ? a.rating - b.rating : b.rating - a.rating;
+    }
+    if (sort === 'title' || sort === 'author') {
+      const cmp = a[sort].localeCompare(b[sort]);
+      return order === 'asc' ? cmp : -cmp;
+    }
+    const diff = a[sort] - b[sort];
+    return order === 'asc' ? diff : -diff;
+  });
