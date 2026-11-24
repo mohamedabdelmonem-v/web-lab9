@@ -37,3 +37,12 @@ export async function createBook(bookData) {
   books = [...books, newBook];
   return { ...newBook };
 }
+
+export async function replaceBook(id, bookData) {
+  await delay();
+  const index = books.findIndex((b) => b.id === id);
+  if (index === -1) return null;
+  const updated = { id, ...bookData };
+  books = books.map((b) => (b.id === id ? updated : b));
+  return { ...updated };
+}
