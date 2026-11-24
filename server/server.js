@@ -161,3 +161,41 @@ app.patch('/api/books/:id', async (req, res) => {
   const updated = await replaceBook(id, data);
   res.status(200).json(updated);
 });
+
+// DELETE /api/books/:id
+app.delete('/api/books/:id', async (req, res) => {
+  const id = validatePositiveIntId(req.params.id);
+  if (!id) return res.status(400).json({ error: 'Book ID must be a positive integer.' });
+
+  const deleted = await deleteBook(id);
+  if (!deleted) return res.status(404).json({ error: 'Book not found.' });
+
+  res.status(204).end();
+});
+
+// GET /api/stats
+app.get('/api/stats', async (req, res) => {
+  const all = await getAllBooks();
+  const total = all.length;
+  const readCount = all.filter((b) => b.read).length;
+  const unreadCount = total - readCount;
+
+  const ratedBooks = all.filter((b) => b.rating !== null);
+  const averageRating =
+    ratedBooks.length > 0
+      ? Number((ratedBooks.reduce((sum, b) => sum + b.rating, 0) / ratedBooks.length).toFixed(2))
+      : null;
+
+  const byGenre = all.reduce((acc, b) => {
+    acc[b.genre] = (acc[b.genre] || 0) + 1;
+    return acc;
+  }, {});
+
+  res.status(200).json({
+    total,
+    read: readCount,
+    unread: unreadCount,
+    averageRating,
+    byGenre
+  });
+});
