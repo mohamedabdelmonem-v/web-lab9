@@ -9,3 +9,7 @@ import {
   replaceBook,
   deleteBook
 } from './booksStore.js';
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:5173';
