@@ -23,3 +23,6 @@ export function validateBookPayload(body, isPatch = false, existingBook = null) 
   if (typeof titleRaw !== 'string' || titleRaw.trim().length < 1 || titleRaw.trim().length > 100) {
     return { error: 'Title must be a string between 1 and 100 characters after trimming.' };
   }
+  if (typeof authorRaw !== 'string' || authorRaw.trim().length < 1 || authorRaw.trim().length > 100) {
+    return { error: 'Author must be a string between 1 and 100 characters after trimming.' };
+  }
