@@ -55,3 +55,25 @@ app.get('/api/books', async (req, res) => {
 
   const limitNum = Number(limit);
   const pageNum = Number(page);
+  if (!/^\d+$/.test(String(limit)) || limitNum < 1 || limitNum > 50) {
+    return res.status(400).json({ error: 'Limit must be an integer between 1 and 50.' });
+  }
+  if (!/^\d+$/.test(String(page)) || pageNum < 1) {
+    return res.status(400).json({ error: 'Page must be a positive integer.' });
+  }
+
+  let results = await getAllBooks();
+
+  if (genre) {
+    results = results.filter((b) => b.genre === genre);
+  }
+  if (read !== undefined) {
+    const readBool = read === 'true';
+    results = results.filter((b) => b.read === readBool);
+  }
+  if (q && q.trim() !== '') {
+    const term = q.trim().toLowerCase();
+    results = results.filter(
+      (b) => b.title.toLowerCase().includes(term) || b.author.toLowerCase().includes(term)
+    );
+  }
