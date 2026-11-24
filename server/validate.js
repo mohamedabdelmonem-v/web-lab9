@@ -19,3 +19,7 @@ export function validateBookPayload(body, isPatch = false, existingBook = null) 
   const genreRaw = isPatch && body.genre === undefined ? existingBook.genre : body.genre;
   const readRaw = isPatch && body.read === undefined ? existingBook.read : (body.read ?? false);
   const ratingRaw = isPatch && body.rating === undefined ? existingBook.rating : (body.rating ?? null);
+
+  if (typeof titleRaw !== 'string' || titleRaw.trim().length < 1 || titleRaw.trim().length > 100) {
+    return { error: 'Title must be a string between 1 and 100 characters after trimming.' };
+  }
