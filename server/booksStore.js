@@ -21,3 +21,12 @@ export async function getBookById(id) {
   const found = books.find((b) => b.id === id);
   return found ? { ...found } : null;
 }
+
+export async function isDuplicateBook(title, author, excludeId = null) {
+  await delay(10);
+  const t = title.toLowerCase();
+  const a = author.toLowerCase();
+  return books.some(
+    (b) => b.id !== excludeId && b.title.toLowerCase() === t && b.author.toLowerCase() === a
+  );
+}
