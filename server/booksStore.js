@@ -10,3 +10,8 @@ let books = [
 ];
 
 let nextId = 7;
+
+export async function getAllBooks() {
+  await delay();
+  return books.map((b) => ({ ...b }));
+}
