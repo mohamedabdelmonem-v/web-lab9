@@ -1,0 +1,1 @@
+const delay = (ms = 40) => new Promise((resolve) => setTimeout(resolve, ms));
