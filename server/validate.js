@@ -29,3 +29,6 @@ export function validateBookPayload(body, isPatch = false, existingBook = null) 
   if (typeof yearRaw !== 'number' || !Number.isInteger(yearRaw) || yearRaw < 1000 || yearRaw > currentYear) {
     return { error: `Year must be an integer between 1000 and ${currentYear}.` };
   }
+  if (!VALID_GENRES.includes(genreRaw)) {
+    return { error: `Genre must be one of: ${VALID_GENRES.join(', ')}.` };
+  }
