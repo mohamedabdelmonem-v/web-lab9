@@ -41,3 +41,11 @@ export function fetchBooks(filters = {}, signal) {
 export function fetchStats(signal) {
   return request('/api/stats', { signal });
 }
+
+export function createBook(bookData) {
+  return request('/api/books', { method: 'POST', body: bookData });
+}
+
+export function replaceBook(id, bookData) {
+  return request(`/api/books/${id}`, { method: 'PUT', body: bookData });
+}
