@@ -46,3 +46,11 @@ export async function replaceBook(id, bookData) {
   books = books.map((b) => (b.id === id ? updated : b));
   return { ...updated };
 }
+
+export async function deleteBook(id) {
+  await delay();
+  const exists = books.some((b) => b.id === id);
+  if (!exists) return false;
+  books = books.filter((b) => b.id !== id);
+  return true;
+}
