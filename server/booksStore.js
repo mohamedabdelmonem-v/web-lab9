@@ -8,3 +8,5 @@ let books = [
   { id: 5, title: 'Clean Code', author: 'Robert C. Martin', year: 2008, genre: 'non-fiction', read: true, rating: 4 },
   { id: 6, title: 'The Name of the Wind', author: 'Patrick Rothfuss', year: 2007, genre: 'fantasy', read: false, rating: null }
 ];
+
+let nextId = 7;
