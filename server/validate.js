@@ -32,3 +32,6 @@ export function validateBookPayload(body, isPatch = false, existingBook = null) 
   if (!VALID_GENRES.includes(genreRaw)) {
     return { error: `Genre must be one of: ${VALID_GENRES.join(', ')}.` };
   }
+  if (typeof readRaw !== 'boolean') {
+    return { error: 'Read status must be a boolean.' };
+  }
