@@ -25,3 +25,15 @@ app.use((err, req, res, next) => {
   }
   next(err);
 });
+
+// GET /api/books with filtering, sorting, and pagination
+app.get('/api/books', async (req, res) => {
+  const allowedParams = ['genre', 'read', 'q', 'sort', 'order', 'limit', 'page'];
+  for (const [key, val] of Object.entries(req.query)) {
+    if (Array.isArray(val)) {
+      return res.status(400).json({ error: `Repeated query parameter: ${key}` });
+    }
+    if (!allowedParams.includes(key)) {
+      return res.status(400).json({ error: `Unknown query parameter: ${key}` });
+    }
+  }
