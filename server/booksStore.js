@@ -30,3 +30,10 @@ export async function isDuplicateBook(title, author, excludeId = null) {
     (b) => b.id !== excludeId && b.title.toLowerCase() === t && b.author.toLowerCase() === a
   );
 }
+
+export async function createBook(bookData) {
+  await delay();
+  const newBook = { id: nextId++, ...bookData };
+  books = [...books, newBook];
+  return { ...newBook };
+}
