@@ -43,3 +43,15 @@ export function validateBookPayload(body, isPatch = false, existingBook = null) 
       return { error: 'A rating is allowed only when read is true.' };
     }
   }
+
+  return {
+    data: {
+      title: titleRaw.trim(),
+      author: authorRaw.trim(),
+      year: yearRaw,
+      genre: genreRaw,
+      read: readRaw,
+      rating: ratingRaw
+    }
+  };
+}
