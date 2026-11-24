@@ -26,3 +26,6 @@ export function validateBookPayload(body, isPatch = false, existingBook = null) 
   if (typeof authorRaw !== 'string' || authorRaw.trim().length < 1 || authorRaw.trim().length > 100) {
     return { error: 'Author must be a string between 1 and 100 characters after trimming.' };
   }
+  if (typeof yearRaw !== 'number' || !Number.isInteger(yearRaw) || yearRaw < 1000 || yearRaw > currentYear) {
+    return { error: `Year must be an integer between 1000 and ${currentYear}.` };
+  }
